@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+	<record>
+	<paper>
+		<title>A Data-Driven Approach to Hue-Preserving Color-Blending</title>
+		<study>
+		<studytype>Online</studytype>	
+			<participants>
+			<type>Mixed(STUDENTS/Genral Public)</type>
+			<count>133</count>
+			<age>NA</age>
+			<education>NA</education>
+			<gender>NA</gender>
+			<healthcondition>FALSE</healthcondition>
+			</participants>
+		</study>
+	</paper>
+	</record>
+
+	<record>
+	<paper>
+		<title>A Handheld Flexible Display System</title>
+		<study>	
+		<studytype>Expert Review</studytype>
+			<participants>
+			<type>EXPERTS</type>
+			<count>4</count>
+			<age>NA</age>
+			<education>NA</education>
+			<gender>NA</gender>
+			<healthcondition>FALSE</healthcondition>
+			</participants>
+		</study>
+	</paper>
+	</record>
+</root>
