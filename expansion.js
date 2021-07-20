@@ -29,6 +29,47 @@ function del() {
   }
 }
 
+function eval_false() {
+  var selectBox = document.getElementById("evaluation");
+  var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+  if(selectedValue === 'FALSE') {
+    for(var k = 1; k <= n; ++k) {
+      document.getElementById('field' + k.toString()).outerHTML = "";
+    }
+    human_subject.push('N/A');
+    human_subject_category.push('N/A');
+    study_type.push('N/A');
+    number_of_participants.push('N/A');
+    all_ages_reported.push('N/A');
+    average_age.push('N/A');
+    upper_age_range.push('N/A');
+    lower_age_range.push('N/A');
+    education.push('N/A');
+    number_of_males.push('N/A');
+    number_of_females.push('N/A');
+    health_condition_reported.push('N/A');
+  }
+}
+
+function human_subj_false(n) {
+  var selectBox = document.getElementById("human_subject" + n.toString());
+  var selectedValue = selectBox.options[selectBox.selectedIndex].value; 
+  if(selectedValue === 'FALSE') {
+    document.getElementById('hum_subj_false' + n.toString()).outerHTML = "";
+  }
+  human_subject_category.push('N/A');
+  study_type.push('N/A');
+  number_of_participants.push('N/A');
+  all_ages_reported.push('N/A');
+  average_age.push('N/A');
+  upper_age_range.push('N/A');
+  lower_age_range.push('N/A');
+  education.push('N/A');
+  number_of_males.push('N/A');
+  number_of_females.push('N/A');
+  health_condition_reported.push('N/A');
+}
+
 function education_add() {
   ed = ed + 1;
   document.getElementById('educ_add' + n.toString()).innerHTML += `<div id ="ed` + n.toString() + ed.toString() + `"><div class="name-item">
@@ -60,19 +101,19 @@ function create(htmlStr) {
 }
 
 function expand() {
-  var html = `<fieldset id="` + n.toString() + `">
+  var html = `<fieldset id=field"` + n.toString() + `">
     <legend>Study ` + n.toString() + `</legend>
   <div class="item">
     <div class="name-item">
       <label for="address">Human Subject<span>*</span></label>
     </div>
-    <select id="human_subject` + n.toString() + `">
+    <select id="human_subject` + n.toString() + `" onchange="human_subj_false('` + n.toString() + `')">
       <option selected value="" disabled selected></option>
       <option value="TRUE" name="humansubject">TRUE</option>
       <option value="FALSE" name="humansubject">FALSE</option>
     </select>
   </div>
-
+  <div id="hum_subj_false` + n.toString() + `">
   <div class="item">
     <label for="address">Human Subject Category<span>*</span></label>
     <!-- <div class="name-item"> -->
@@ -219,6 +260,7 @@ function expand() {
       <option value="TRUE" >TRUE</option>
       <option value="FALSE">FALSE</option>
     </select>
+  </div>
   </div>
 </fieldset>`
     var expand = create(html)
