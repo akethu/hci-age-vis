@@ -270,6 +270,6 @@ function retrieve() {
     number_of_males.push(document.getElementById('num_males' + i.toString()).value);
     // To get health condition reported value
     health_condition_reported.push(document.getElementById('health_condition_reported' + i.toString()).value);
-    alert('The form has been submitted successfully.')
   }
+  alert('The form has been submitted successfully.');
 }
