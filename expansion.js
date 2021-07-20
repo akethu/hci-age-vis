@@ -31,7 +31,7 @@ function del() {
 
 function education_add() {
   ed = ed + 1;
-  document.getElementById('educ_add').innerHTML += `<div id ="ed` + n.toString() + ed.toString() + `"><div class="name-item">
+  document.getElementById('educ_add' + n.toString()).innerHTML += `<div id ="ed` + n.toString() + ed.toString() + `"><div class="name-item">
   <label for="education">Education` + ed.toString() + `<span>*</span></label>
 </div>
 <select id="education` + n.toString() + ed.toString() + `">
@@ -182,16 +182,22 @@ function expand() {
   </div>
 
   <div class="item">
-    <div class="name-item">
-      <label for="education">Education<span>*</span></label>
-    </div>
-    <select id="education` + n.toString() + `">
-      <option selected value="" disabled selected></option>
-      <option value="Graduate" >Graduate</option>
-      <option value="Undergraduate">Undergraduate</option>
-      <option value="High-school">High-school</option>
-      <option value="Less than high-school">Less than high-school</option>
-    </select>
+    <fieldset>
+      <legend>Education</legend>
+        <div class="name-item">
+          <label for="education">Education1<span>*</span></label>
+        </div>
+        <select id="education` + n.toString() + ed.toString() + `">
+          <option selected value="" disabled selected></option>
+          <option value="Graduate" >Graduate</option>
+          <option value="Undergraduate">Undergraduate</option>
+          <option value="High-school">High-school</option>
+          <option value="Less than high-school">Less than high-school</option>
+        </select>
+          <div id="educ_add` + n.toString() + `"></div>
+          <button type="button" onclick="education_add()" style="padding: 2px; font-size: 12px;">Add education</button>
+          <button type="button" onclick="education_remove()" style="padding: 2px; font-size: 12px; background-color: orangered;">Remove education</button>
+    </fieldset>
   </div>
 
   <div class="item">
@@ -263,6 +269,7 @@ function retrieve() {
     number_of_females.push(document.getElementById('num_females' + i.toString()).value);
     number_of_males.push(document.getElementById('num_males' + i.toString()).value);
     // To get health condition reported value
-    health_condition_reported.push(document.getElementById('health_condition_reported' + i.toString()).value)
+    health_condition_reported.push(document.getElementById('health_condition_reported' + i.toString()).value);
+    alert('The form has been submitted successfully.')
   }
 }
