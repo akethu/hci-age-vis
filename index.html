@@ -23,26 +23,26 @@
           <div class="name-item">
             <label for="evaluation1">Evaluation<span>*</span></label>
           </div>
-          <select id="evaluation">
+          <select id="evaluation" onchange="eval_false()">
             <option selected value="" disabled selected></option>
             <option value="TRUE" >TRUE</option>
             <option value="FALSE">FALSE</option>
           </select>
         </div>
 
-        <fieldset id="1">
+        <fieldset id="field1">
           <legend>Study 1</legend>
         <div class="item">
           <div class="name-item">
             <label for="address">Human Subject<span>*</span></label>
           </div>
-          <select id="human_subject1">
+          <select id="human_subject1" onchange="human_subj_false('1')">
             <option selected value="" disabled selected></option>
             <option value="TRUE" name="humansubject1">TRUE</option>
             <option value="FALSE" name="humansubject1">FALSE</option>
           </select>
         </div>
-
+        <div id="hum_subj_false1">
         <div class="item">
           <label for="address">Human Subject Category<span>*</span></label>
           <!-- <div class="name-item"> -->
@@ -190,12 +190,14 @@
             <option value="FALSE">FALSE</option>
           </select>
         </div>
+      </div>
       </fieldset>
       <div id="append"></div>
       <button type="button" href="/" onclick="add()">Add</button>
       <button type="button" href="/" onclick="del()" style="background-color: orangered;">Delete</button>
         <div class="btn-block">
           <button type="submit" href="/" onclick="retrieve()">Submit</button>
+          <button type="reset" onclick="window.location.reload()" style="background-color: orangered;">Reset</button>
         </div>
       </form>
     </div>
