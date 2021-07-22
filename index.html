@@ -153,31 +153,71 @@
 
         <div class="item">
           <fieldset>
-            <legend>Education</legend>
-          <div class="name-item">
-            <label for="education">Education1<span>*</span></label>
+            <legend>Education 1</legend>
+
+            <div class="name-item">
+              <label for="education_count11">Count<span>*</span></label>
           </div>
-          <select id="education11">
+          <input id="education_count11" type="number" name="address" required/>
+
+          <div class="name-item">
+            <label for="ed_gender">Gender<span>*</span></label>
+          </div>
+          <select id="ed_gender11">
             <option selected value="" disabled selected></option>
-            <option value="Graduate" >Graduate</option>
-            <option value="Undergraduate">Undergraduate</option>
-            <option value="High-school">High-school</option>
-            <option value="Less than high-school">Less than high-school</option>
+            <option value="Male" >Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
           </select>
-          <div id="educ_add1"></div>
-          <button type="button" onclick="education_add()" style="padding: 2px; font-size: 12px;">Add education</button>
-          <button type="button" onclick="education_remove()" style="padding: 2px; font-size: 12px; background-color: orangered;">Remove education</button>
+
+          <div class="name-item">
+            <label for="education_age11">Age<span>*</span></label>
+        </div>
+        <input id="education_age11" type="number" name="address" required/>
+
+        <div class="name-item">
+          <label for="education">Education Level<span>*</span></label>
+        </div>
+        <select id="education11">
+          <option selected value="" disabled selected></option>
+          <option value="Graduate" >Graduate</option>
+          <option value="Undergraduate">Undergraduate</option>
+          <option value="High-school">High-school</option>
+          <option value="Less than high-school">Less than high-school</option>
+        </select>
         </fieldset>
+        <div id="educ_add1"></div>
+        <button type="button" onclick="education_add(1)" style="padding: 2px; font-size: 12px;">Add education</button>
+          <button type="button" onclick="education_remove(1)" style="padding: 2px; font-size: 12px; background-color: orangered;">Remove education</button>
         </div>
 
         <div class="item">
           <fieldset>
-            <legend>Gender<span> *</span></legend>
-          <label for="num_males">Number of males: <span>*</span></label>
-          <input id="num_males1" type="number" name="address" required/>
-          <label for="num_females">Number of females: <span>*</span></label>
-          <input id="num_females1" type="number" name="address" required/>
+            <legend>Gender 1<span> *</span></legend>
+
+            <div class="name-item">
+              <label for="gender_count11">Count<span>*</span></label>
+          </div>
+          <input id="gender_count11" type="number" name="address" required/>
+
+          <div class="name-item">
+            <label for="gender_age11">Age<span>*</span></label>
+        </div>
+        <input id="gender_age11" type="number" name="address" required/>
+
+        <div class="name-item">
+          <label for="gender_gender">Gender<span>*</span></label>
+        </div>
+        <select id="gender_gender11">
+          <option selected value="" disabled selected></option>
+          <option value="Male" >Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
         </fieldset>
+        <div id="gender_add1"></div>
+        <button type="button" onclick="gender_add(1)" style="padding: 2px; font-size: 12px;">Add gender</button>
+          <button type="button" onclick="gender_remove(1)" style="padding: 2px; font-size: 12px; background-color: orangered;">Remove gender</button>
         </div>
 
         <div class="item">
