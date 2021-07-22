@@ -1,5 +1,6 @@
 var n = 1;
-var ed = 1;
+var ed_array = [1]
+var gend_array = [1]
 // Names of all the information we require
 var paper_title;
 var evaluation;
@@ -19,12 +20,14 @@ var health_condition_reported = [];
 
 function add() {
   n = n + 1;
+  ed_array.push(1);
+  gend_array.push(1);
   expand();
 }
 
 function del() {
   if(n > 1) {
-    document.getElementById(n.toString()).outerHTML = "";
+    document.getElementById('field' + n.toString()).outerHTML = "";
     n = n - 1;
   }
 }
@@ -70,24 +73,82 @@ function human_subj_false(n) {
   health_condition_reported.push('N/A');
 }
 
-function education_add() {
-  ed = ed + 1;
-  document.getElementById('educ_add' + n.toString()).innerHTML += `<div id ="ed` + n.toString() + ed.toString() + `"><div class="name-item">
-  <label for="education">Education` + ed.toString() + `<span>*</span></label>
-</div>
-<select id="education` + n.toString() + ed.toString() + `">
-  <option selected value="" disabled selected></option>
-  <option value="Graduate" >Graduate</option>
-  <option value="Undergraduate">Undergraduate</option>
-  <option value="High-school">High-school</option>
-  <option value="Less than high-school">Less than high-school</option>
-</select></div>`
+function education_add(k) {
+  ed_array[k - 1] = ed_array[k - 1] + 1;
+  document.getElementById('educ_add' + k.toString()).innerHTML += `<div id ="ed` + k.toString() + ed_array[k - 1].toString() + `"><fieldset>
+          <legend>Education ` + ed_array[k - 1].toString() + `</legend>
+          <div class="name-item">
+              <label for="education_count` + k.toString() + ed_array[k - 1].toString() + `">Count<span>*</span></label>
+          </div>
+          <input id="education_count` + k.toString() + ed_array[k - 1].toString() + `" type="number" name="address" required/>
+
+          <div class="name-item">
+            <label for="ed_gender` + k.toString() + ed_array[k - 1].toString() + `">Gender<span>*</span></label>
+          </div>
+          <select id="ed_gender` + k.toString() + ed_array[k - 1].toString() + `">
+            <option selected value="" disabled selected></option>
+            <option value="Male" >Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <div class="name-item">
+            <label for="education_age` + k.toString() + ed_array[k - 1].toString() + `">Age<span>*</span></label>
+        </div>
+        <input id="education_age` + k.toString() + ed_array[k - 1].toString() + `" type="number" name="address" required/>
+
+        <div class="name-item">
+          <label for="education">Education Level<span>*</span></label>
+        </div>
+        <select id="education` + k.toString() + ed_array[k - 1].toString() + `">
+          <option selected value="" disabled selected></option>
+          <option value="Graduate" >Graduate</option>
+          <option value="Undergraduate">Undergraduate</option>
+          <option value="High-school">High-school</option>
+          <option value="Less than high-school">Less than high-school</option>
+        </select>
+  </fieldset></div>`;
 }
 
-function education_remove() {
-  if(ed > 1) {
-    document.getElementById("ed" + n.toString() + ed.toString()).outerHTML = "";
-    ed = ed - 1;
+function gender_add(k) {
+  gend_array[k - 1] = gend_array[k - 1] + 1;
+  document.getElementById('gender_add' + k.toString()).innerHTML += `<div id="gend` + k.toString() + gend_array[k - 1].toString() + `"><fieldset>
+  <legend>Gender ` + gend_array[k - 1].toString() + `<span> *</span></legend>
+
+  <div class="name-item">
+    <label for="gender_count` + k.toString() + gend_array[k - 1].toString() + `">Count<span>*</span></label>
+</div>
+<input id="gender_count` + k.toString() + gend_array[k - 1].toString() + `" type="number" name="address" required/>
+
+<div class="name-item">
+  <label for="gender_age` + k.toString() + gend_array[k - 1].toString() + `">Age<span>*</span></label>
+</div>
+<input id="gender_age` + k.toString() + gend_array[k - 1].toString() + `" type="number" name="address" required/>
+
+<div class="name-item">
+<label for="gender_gender">Gender<span>*</span></label>
+</div>
+<select id="gender_gender` + k.toString() + gend_array[k - 1].toString() + `">
+<option selected value="" disabled selected></option>
+<option value="Male" >Male</option>
+<option value="Female">Female</option>
+<option value="Other">Other</option>
+</select>
+</fieldset></div>`;
+
+}
+
+function education_remove(k) {
+  if(ed_array[k - 1] > 1) {
+    document.getElementById("ed" + k.toString() + ed_array[k - 1].toString()).outerHTML = "";
+    ed_array[k - 1] = ed_array[k - 1] - 1;
+  }
+}
+
+function gender_remove(k) {
+  if(gend_array[k - 1] > 1) {
+    document.getElementById("gend" + k.toString() + gend_array[k - 1].toString()).outerHTML = "";
+    gend_array[k - 1] = gend_array[k - 1] - 1;
   }
 }
 
@@ -101,7 +162,7 @@ function create(htmlStr) {
 }
 
 function expand() {
-  var html = `<fieldset id=field"` + n.toString() + `">
+  var html = `<fieldset id="field` + n.toString() + `">
     <legend>Study ` + n.toString() + `</legend>
   <div class="item">
     <div class="name-item">
@@ -223,32 +284,71 @@ function expand() {
   </div>
 
   <div class="item">
-    <fieldset>
-      <legend>Education</legend>
-        <div class="name-item">
-          <label for="education">Education1<span>*</span></label>
-        </div>
-        <select id="education` + n.toString() + ed.toString() + `">
-          <option selected value="" disabled selected></option>
-          <option value="Graduate" >Graduate</option>
-          <option value="Undergraduate">Undergraduate</option>
-          <option value="High-school">High-school</option>
-          <option value="Less than high-school">Less than high-school</option>
-        </select>
-          <div id="educ_add` + n.toString() + `"></div>
-          <button type="button" onclick="education_add()" style="padding: 2px; font-size: 12px;">Add education</button>
-          <button type="button" onclick="education_remove()" style="padding: 2px; font-size: 12px; background-color: orangered;">Remove education</button>
-    </fieldset>
+  <fieldset>
+  <legend>Education 1</legend>
+
+  <div class="name-item">
+    <label for="education_count` + n.toString() + ed_array[n - 1].toString() + `">Count<span>*</span></label>
+</div>
+<input id="education_count` + n.toString() + ed_array[n - 1].toString() + `" type="number" name="address" required/>
+
+<div class="name-item">
+  <label for="ed_gender">Gender<span>*</span></label>
+</div>
+<select id="ed_gender` + n.toString() + ed_array[n - 1].toString() + `">
+  <option selected value="" disabled selected></option>
+  <option value="Male" >Male</option>
+  <option value="Female">Female</option>
+  <option value="Other">Other</option>
+</select>
+
+<div class="name-item">
+  <label for="education_age` + n.toString() + ed_array[n - 1].toString() + `">Age<span>*</span></label>
+</div>
+<input id="education_age` + n.toString() + ed_array[n - 1].toString() + `" type="number" name="address" required/>
+
+<div class="name-item">
+<label for="education">Education Level<span>*</span></label>
+</div>
+<select id="education` + n.toString() + ed_array[n - 1].toString() + `">
+<option selected value="" disabled selected></option>
+<option value="Graduate" >Graduate</option>
+<option value="Undergraduate">Undergraduate</option>
+<option value="High-school">High-school</option>
+<option value="Less than high-school">Less than high-school</option>
+</select>
+</fieldset>
+<div id="educ_add` + n.toString() + `"></div>
+<button type="button" onclick="education_add(` + n.toString() + `)" style="padding: 2px; font-size: 12px;">Add education</button>
+<button type="button" onclick="education_remove(` + n.toString() + `)" style="padding: 2px; font-size: 12px; background-color: orangered;">Remove education</button>
   </div>
 
   <div class="item">
     <fieldset>
-      <legend>Gender<span> *</span></legend>
-    <label for="num_males">Number of males: <span>*</span></label>
-    <input id="num_males` + n.toString() + `" type="number" name="address" required/>
-    <label for="num_females">Number of females: <span>*</span></label>
-    <input id="num_females` + n.toString() + `" type="number" name="address" required/>
+      <legend>Gender 1<span> *</span></legend>
+      <div class="name-item">
+      <label for="gender_count` + n.toString() + gend_array[n - 1].toString() + `">Count<span>*</span></label>
+  </div>
+  <input id="gender_count` + n.toString() + gend_array[n - 1].toString() + `" type="number" name="address" required/>
+
+  <div class="name-item">
+    <label for="gender_age` + n.toString() + gend_array[n - 1].toString() + `">Age<span>*</span></label>
+</div>
+<input id="gender_age` + n.toString() + gend_array[n - 1].toString() + `" type="number" name="address" required/>
+
+<div class="name-item">
+  <label for="gender_gender">Gender<span>*</span></label>
+</div>
+<select id="gender_gender` + n.toString() + gend_array[n - 1].toString() + `">
+  <option selected value="" disabled selected></option>
+  <option value="Male" >Male</option>
+  <option value="Female">Female</option>
+  <option value="Other">Other</option>
+</select>
   </fieldset>
+  <div id="gender_add` + n.toString() + `"></div>
+  <button type="button" onclick="gender_add(` + n.toString() + `)" style="padding: 2px; font-size: 12px;">Add gender</button>
+  <button type="button" onclick="gender_remove(` + n.toString() + `)" style="padding: 2px; font-size: 12px; background-color: orangered;">Remove gender</button>
   </div>
 
   <div class="item">
@@ -262,8 +362,8 @@ function expand() {
     </select>
   </div>
   </div>
-</fieldset>`
-    var expand = create(html)
+</fieldset>`;
+    var expand = create(html);
     document.getElementById("append").innerHTML += html;   
 }
 
