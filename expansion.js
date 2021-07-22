@@ -1,6 +1,9 @@
 var n = 1;
 var ed_array = [1]
 var gend_array = [1]
+// Helpers
+var eval_false_triggered = 0;
+var hum_subj_false_triggered = [];
 // Names of all the information we require
 var paper_title;
 var evaluation;
@@ -14,8 +17,7 @@ var average_age = [];
 var upper_age_range = [];
 var lower_age_range = [];
 var education = [];
-var number_of_males = [];
-var number_of_females = [];
+var gender = [];
 var health_condition_reported = [];
 
 function add() {
@@ -36,6 +38,7 @@ function eval_false() {
   var selectBox = document.getElementById("evaluation");
   var selectedValue = selectBox.options[selectBox.selectedIndex].value;
   if(selectedValue === 'FALSE') {
+    eval_false_triggered = 1;
     for(var k = 1; k <= n; ++k) {
       document.getElementById('field' + k.toString()).outerHTML = "";
     }
@@ -47,9 +50,20 @@ function eval_false() {
     average_age.push('N/A');
     upper_age_range.push('N/A');
     lower_age_range.push('N/A');
-    education.push('N/A');
-    number_of_males.push('N/A');
-    number_of_females.push('N/A');
+    for(var edu = 1; edu <= ed_array[i]; ++edu) {
+      var temp = [];
+      for(var e = 1; e <= 4; ++e) {
+        temp.push('N/A');
+      }
+      education.push(temp);
+    }
+    for(var gend = 1; gend <= gend_array[i]; ++gend) {
+      var temp = [];
+      for(var g = 1; g <= 4; ++g) {
+        temp.push('N/A');
+      }
+      gender.push(temp);
+    }
     health_condition_reported.push('N/A');
   }
 }
@@ -57,9 +71,17 @@ function eval_false() {
 function human_subj_false(n) {
   var selectBox = document.getElementById("human_subject" + n.toString());
   var selectedValue = selectBox.options[selectBox.selectedIndex].value; 
+  hum_subj_false_triggered.push(0);
   if(selectedValue === 'FALSE') {
-    document.getElementById('hum_subj_false' + n.toString()).outerHTML = "";
+    hum_subj_false_triggered[n - 1] = 1;
   }
+  else {
+    hum_subj_false_triggered[n - 1] = 0;
+  }
+  document.getElementById('hum_subj_false' + n.toString()).outerHTML = "";
+}
+
+function human_subj_false_helper() {
   human_subject_category.push('N/A');
   study_type.push('N/A');
   number_of_participants.push('N/A');
@@ -67,9 +89,16 @@ function human_subj_false(n) {
   average_age.push('N/A');
   upper_age_range.push('N/A');
   lower_age_range.push('N/A');
-  education.push('N/A');
-  number_of_males.push('N/A');
-  number_of_females.push('N/A');
+  var temp = [];
+  for(var e = 1; e <= 4; ++e) {
+    temp.push('N/A');
+  }
+  education.push(temp);
+  temp = [];
+  for(var g = 1; g <= 4; ++g) {
+    temp.push('N/A');
+  }
+  gender.push(temp);
   health_condition_reported.push('N/A');
 }
 
@@ -168,7 +197,7 @@ function expand() {
     <div class="name-item">
       <label for="address">Human Subject<span>*</span></label>
     </div>
-    <select id="human_subject` + n.toString() + `" onchange="human_subj_false('` + n.toString() + `')">
+    <select id="human_subject` + n.toString() + `" onchange="human_subj_false(` + n.toString() + `)">
       <option selected value="" disabled selected></option>
       <option value="TRUE" name="humansubject">TRUE</option>
       <option value="FALSE" name="humansubject">FALSE</option>
@@ -372,46 +401,62 @@ function retrieve() {
   paper_title = document.getElementById('title').value;
   // To get paper evaluation
   evaluation = document.getElementById('evaluation').value;
-  // To get the repeated values
-  for(var i = 1; i <= n; ++i) {
-    // To get the human subject values
-    human_subject.push(document.getElementById('human_subject' + i.toString()).value);
-    // To get the human subject category value
-    var hsc = document.getElementsByName('subj_category' + i.toString());
-    for(var j = 0; j < hsc.length; ++j) {
-      if(hsc[j].checked) {
-        human_subject_category.push(hsc[j].value);
-        break;
+  if(eval_false_triggered === 0) {
+    // To get the repeated values
+    for(var i = 1; i <= n; ++i) {
+      // To get the human subject values
+      if(hum_subj_false_triggered[i] === 0) {
+        human_subject.push(document.getElementById('human_subject' + i.toString()).value);
+        // To get the human subject category value
+        var hsc = document.getElementsByName('subj_category' + i.toString());
+        for(var j = 0; j < hsc.length; ++j) {
+          if(hsc[j].checked) {
+            human_subject_category.push(hsc[j].value);
+            break;
+          }
+        }
+        // To get the study type
+        var st = document.getElementsByName('study' + i.toString());
+        for(var j = 0; j < st.length; ++j) {
+          if(st[j].checked) {
+            study_type.push(st[j].value);
+            break;
+          }
+        }
+        // To get the number of participants
+        number_of_participants.push(document.getElementById('participants' + i.toString()).value);
+        // To get all ages reported value
+        all_ages_reported.push(document.getElementById('all_ages_reported' + i.toString()).value);
+        // To get average age
+        average_age.push(document.getElementById('average_age' + i.toString()).value);
+        // To get upper and lower age range
+        upper_age_range.push(document.getElementById('upper_age' + i.toString()).value);
+        lower_age_range.push(document.getElementById('lower_age' + i.toString()).value);
+        // To get education fields
+        for(var edu = 1; edu <= ed_array[i]; ++edu) {
+          var temp = []
+          temp.push(document.getElementById('education_count' + i.toString() + edu.toString()).value);
+          temp.push(document.getElementById('ed_gender' + i.toString() + edu.toString()).value);
+          temp.push(document.getElementById('education_age' + i.toString() + edu.toString()).value);
+          temp.push(document.getElementById('education' + i.toString() + edu.toString()).value);
+          education.push(temp);
+        }
+        // To get gender fields
+        for(var gend = 1; gend <= gend_array[i]; ++gend) {
+          var temp = []
+          temp.push(document.getElementById('education_count' + i.toString() + gend.toString()).value);
+          temp.push(document.getElementById('ed_gender' + i.toString() + gend.toString()).value);
+          temp.push(document.getElementById('education_age' + i.toString() + gend.toString()).value);
+          temp.push(document.getElementById('education' + i.toString() + gend.toString()).value);
+          gender.push(temp);
+        }
+        // To get health condition reported value
+        health_condition_reported.push(document.getElementById('health_condition_reported' + i.toString()).value);
+      }
+      else {
+        human_subj_false_helper();
       }
     }
-    // To get the study type
-    var st = document.getElementsByName('study' + i.toString());
-    for(var j = 0; j < st.length; ++j) {
-      if(st[j].checked) {
-        study_type.push(st[j].value);
-        break;
-      }
-    }
-    // To get the number of participants
-    number_of_participants.push(document.getElementById('participants' + i.toString()).value);
-    // To get all ages reported value
-    all_ages_reported.push(document.getElementById('all_ages_reported' + i.toString()).value);
-    // To get average age
-    average_age.push(document.getElementById('average_age' + i.toString()).value);
-    // To get upper and lower age range
-    upper_age_range.push(document.getElementById('upper_age' + i.toString()).value);
-    lower_age_range.push(document.getElementById('lower_age' + i.toString()).value);
-    // To get education value
-    var temp = []
-    for(var k = 1; k <= ed; ++k) {
-      temp.push(document.getElementById('education' + n.toString() + k.toString()).value);
-    }
-    education.push(temp);
-    // To get number of females and males; gender
-    number_of_females.push(document.getElementById('num_females' + i.toString()).value);
-    number_of_males.push(document.getElementById('num_males' + i.toString()).value);
-    // To get health condition reported value
-    health_condition_reported.push(document.getElementById('health_condition_reported' + i.toString()).value);
   }
   alert('The form has been submitted successfully.');
 }
