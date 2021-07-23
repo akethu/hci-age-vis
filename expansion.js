@@ -19,7 +19,8 @@ var lower_age_range = [];
 var education = [];
 var gender = [];
 var health_condition_reported = [];
-
+var obj = []
+  
 function add() {
   n = n + 1;
   ed_array.push(1);
@@ -74,11 +75,11 @@ function human_subj_false(n) {
   hum_subj_false_triggered.push(0);
   if(selectedValue === 'FALSE') {
     hum_subj_false_triggered[n - 1] = 1;
+    document.getElementById('hum_subj_false' + n.toString()).outerHTML = "";
   }
   else {
     hum_subj_false_triggered[n - 1] = 0;
   }
-  document.getElementById('hum_subj_false' + n.toString()).outerHTML = "";
 }
 
 function human_subj_false_helper() {
@@ -459,4 +460,33 @@ function retrieve() {
     }
   }
   alert('The form has been submitted successfully.');
+}
+
+function convertToExcel() {
+  Excel.run(function (context) {
+    var sheet = context.workbook.worksheets.getItem("Sample");
+    var Table = sheet.tables.add("A1:D1", true /*hasHeaders*/);
+    expensesTable.name = "ExpensesTable";
+
+    expensesTable.getHeaderRowRange().values = [["Date", "Merchant", "Category", "Amount"]];
+
+    expensesTable.rows.add(null /*add rows to the end of the table*/, [
+        ["1/1/2017", "The Phone Company", "Communications", "$120"],
+        ["1/2/2017", "Northwind Electric Cars", "Transportation", "$142"],
+        ["1/5/2017", "Best For You Organics Company", "Groceries", "$27"],
+        ["1/10/2017", "Coho Vineyard", "Restaurant", "$33"],
+        ["1/11/2017", "Bellows College", "Education", "$350"],
+        ["1/15/2017", "Trey Research", "Other", "$135"],
+        ["1/15/2017", "Best For You Organics Company", "Groceries", "$97"]
+    ]);
+
+    if (Office.context.requirements.isSetSupported("ExcelApi", "1.2")) {
+        sheet.getUsedRange().format.autofitColumns();
+        sheet.getUsedRange().format.autofitRows();
+    }
+
+    sheet.activate();
+
+    return context.sync();
+  }).catch(errorHandlerFunction);
 }
