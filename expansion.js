@@ -524,7 +524,7 @@ async function run() {
     const sql1 = `INSERT into paper(paperid, title, eval) values(:1, :2, :3)`;
 
     const rows =
-          [ [paper_title, evaluation] ];
+          [ [0, paper_title, evaluation] ];
 
     let result = await connection.executeMany(sql, rows);
 
@@ -587,7 +587,7 @@ async function run() {
             temp.push('' + i + j);
             temp.push('' + i + j);
             temp.push('' + i + j);
-            for(var k = 0; k < 4; ++k) {
+            for(var k = 0; k < 3; ++k) {
                 temp.push(gender[j][k]);
             }
             rows4.push(temp);
