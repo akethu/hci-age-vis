@@ -530,6 +530,8 @@ async function run() {
 
     console.log(result.rowsAffected, "Rows Inserted into Paper table");
 
+    connection.commit();
+
     // Study Table
     const sql2 = `INSERT into study(paperid, studyid, humansub, humansubcat, studytype, pcount, allage, avgage, agerange, health) values(:1, :2, :3, :4, :5, :6, :7, :8, :9, :10)`;
 
@@ -538,20 +540,22 @@ async function run() {
         var temp = []
         temp.push(0);
         temp.push(1);
-        temp.push(human_subject[i]);
-        temp.push(human_subject_category[i]);
-        temp.push(study_type[i]);
-        temp.push(number_of_participants[i]);
-        temp.push(all_ages_reported[i]);
-        temp.push(average_age[i]);
-        temp.push(lower_age_range[i] + '-' + upper_age_range[i]);
-        temp.push(health_condition_reported[i]);
+        temp.push(human_subject[i - 1]);
+        temp.push(human_subject_category[i - 1]);
+        temp.push(study_type[i - 1]);
+        temp.push(number_of_participants[i - 1]);
+        temp.push(all_ages_reported[i - 1]);
+        temp.push(average_age[i - 1]);
+        temp.push(lower_age_range[i - 1] + '-' + upper_age_range[i - 1]);
+        temp.push(health_condition_reported[i - 1]);
         rows2.push(temp);
     }
 
     result = await connection.executeMany(sql2, rows2);
 
     console.log(result.rowsAffected, "Rows Inserted in Study table");
+
+    connection.commit();
 
     // Education table
     const sql3 = `INSERT into education(paperid, studyid, eduid, educount, edugender, eduavgage, edulevel) values(:1, :2, :3, :4, :5, :6, :7)`;
@@ -575,9 +579,10 @@ async function run() {
     result = await connection.executeMany(sql3, rows3);
 
     console.log(result.rowsAffected, "Rows Inserted in Education table");
+    connection.commit();
 
     // Geender Table
-    const sql4 = `INSERT into education(paperid, studyid, genid, gencount, genavgage, gengender) values(:1, :2, :3, :4, :5, :6)`;
+    const sql4 = `INSERT into gender(paperid, studyid, genid, gencount, genavgage, gengender) values(:1, :2, :3, :4, :5, :6)`;
 
     const rows4 = [];
     var sum4 = 0;
