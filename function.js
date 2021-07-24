@@ -139,5 +139,3 @@ async function run() {
     }
   }
 }
-
-run();
