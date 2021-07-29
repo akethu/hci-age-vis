@@ -30,7 +30,7 @@ async function run() {
     const sql1 = `INSERT into paper(paperid, title, eval) values(:1, :2, :3)`;
 
     const rows =
-          [ [paper_title, evaluation] ];
+          [ [1, paper_title, evaluation] ];
 
     let result = await connection.executeMany(sql, rows);
 
@@ -44,14 +44,14 @@ async function run() {
         var temp = []
         temp.push(0);
         temp.push(1);
-        temp.push(human_subject[i]);
-        temp.push(human_subject_category[i]);
-        temp.push(study_type[i]);
-        temp.push(number_of_participants[i]);
-        temp.push(all_ages_reported[i]);
-        temp.push(average_age[i]);
-        temp.push(lower_age_range[i] + '-' + upper_age_range[i]);
-        temp.push(health_condition_reported[i]);
+        temp.push(human_subject[i - 1]);
+        temp.push(human_subject_category[i - 1]);
+        temp.push(study_type[i - 1]);
+        temp.push(number_of_participants[i - 1]);
+        temp.push(all_ages_reported[i - 1]);
+        temp.push(average_age[i - 1]);
+        temp.push(lower_age_range[i - 1] + '-' + upper_age_range[i - 1]);
+        temp.push(health_condition_reported[i - 1]);
         rows2.push(temp);
     }
 
